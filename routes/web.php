@@ -18,3 +18,4 @@ Route::get('/', function () {
 });
 
 Route::get('/lists', 'WishListController@index');
+Route::post('/add-new-wish', 'WishListController@addNewWish');

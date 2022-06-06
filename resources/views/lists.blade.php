@@ -6,6 +6,11 @@
 
         <title>Laravel</title>
 
+        <!-- Scripts -->
+        <script src="{{ asset('js/app.js') }}" defer></script>
+        <!-- Styles -->
+        <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@200;600&display=swap" rel="stylesheet">
 
@@ -64,19 +69,88 @@
         </style>
     </head>
     <body>
-        <div>
-            <table>
-                <tr>
-                    <th></th>
-                    <th></th>
-                </tr>
 
+        <!-- Button trigger modal -->
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
+            Add new wish
+        </button>
+
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLongTitle">Add new wish</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+
+
+
+                    <form action="{{ url('add-new-wish') }}" method="post">
+
+                        <div class="modal-body">
+                            @csrf
+                            <div>
+                                <label for="wish_name">Wish name</label>
+                                <input type="text" class="form-control" name="wish_name" required >
+                            </div>
+
+                            <div>
+                                <label for="description">Description</label>
+                                <input type="text" class="form-control" name="description">
+                            </div>
+
+                            <div>
+                                <label for="price">Price</label>
+                                <input type="number" class="form-control" name="price" min="0" max="999999">
+                            </div>
+
+                            <div>
+                                <label for="link">Link</label>
+                                <input type="text" class="form-control" name="link">
+                            </div>
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary">Save changes</button>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+
+        <div>
+            <table class="flex-center position-ref full-height">
                 <tr>
-                @foreach($lists as $list)
-                    <td>{{ $list->id }}</td>
-                    <td>{{ $list->name }}</td>
-                @endforeach
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th>Price</th>
+                    <th>Link</th>
                 </tr>
+                @foreach($lists as $list)
+                <tr>
+                    <td>{{ $list->id }}</td>
+                    <td>{{ $list->wish_name }}</td>
+                    <td>{{ $list->description }}</td>
+                    <td>{{ $list->price ? $list->price . ' BYN' : ' - ' }}</td>
+                    <td>
+                        @if($list->link)
+                            <a href="{{ $list->link }}" class="btn btn-info">
+                                Link
+                            </a>
+                        @else
+                            {{-- Long dash --}}
+                            &#8212;
+                        @endif
+                    </td>
+                </tr>
+                @endforeach
+
             </table>
         </div>
     </body>
