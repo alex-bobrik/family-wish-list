@@ -14,6 +14,9 @@
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@200;600&display=swap" rel="stylesheet">
 
+        <!-- JQuery -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+
         <!-- Styles -->
         <style>
             html, body {
@@ -66,14 +69,34 @@
             .m-b-md {
                 margin-bottom: 30px;
             }
+
+            .first-table, .second-table {
+                border-collapse: separate;
+                border-spacing: 10px;
+                height: 100%;
+                width: 75%;
+                margin: 50px;
+            }
+            table {
+                width: 100%;
+            }
+
         </style>
+        <script>
+            $( document ).ready(function() {
+                $( "#table1-add-button" ).click(function() {
+                    $("#table_number").val(0);
+                });
+
+                $( "#table2-add-button" ).click(function() {
+                    $("#table_number").val(1);
+                });
+            });
+        </script>
+
+
     </head>
     <body>
-
-        <!-- Button trigger modal -->
-        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
-            Add new wish
-        </button>
 
         <!-- Modal -->
         <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -111,6 +134,9 @@
                                 <label for="link">Link</label>
                                 <input type="text" class="form-control" name="link">
                             </div>
+                            <div>
+                                <input type="hidden" name="table_number" id="table_number" value="0">
+                            </div>
                         </div>
 
                         <div class="modal-footer">
@@ -122,36 +148,80 @@
                 </div>
             </div>
         </div>
+        {{--End Modal--}}
 
-        <div>
-            <table class="flex-center position-ref full-height">
-                <tr>
-                    <th>ID</th>
-                    <th>Name</th>
-                    <th>Description</th>
-                    <th>Price</th>
-                    <th>Link</th>
-                </tr>
-                @foreach($lists as $list)
-                <tr>
-                    <td>{{ $list->id }}</td>
-                    <td>{{ $list->wish_name }}</td>
-                    <td>{{ $list->description }}</td>
-                    <td>{{ $list->price ? $list->price . ' BYN' : ' - ' }}</td>
-                    <td>
-                        @if($list->link)
-                            <a href="{{ $list->link }}" class="btn btn-info">
-                                Link
-                            </a>
-                        @else
-                            {{-- Long dash --}}
-                            &#8212;
-                        @endif
-                    </td>
-                </tr>
-                @endforeach
+        <div class="full-height flex-center">
+            <div class="first-table">
+                <div>
+                    <button id="table1-add-button" type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
+                        Add new wish
+                    </button>
+                    <table>
+                        <tr>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Description</th>
+                            <th>Price</th>
+                            <th>Link</th>
+                        </tr>
+                        @foreach($firstTable as $list)
+                        <tr>
+                            <td>{{ $list->id }}</td>
+                            <td>{{ $list->wish_name }}</td>
+                            <td>{{ $list->description }}</td>
+                            <td>{{ $list->price ? $list->price . ' BYN' : ' - ' }}</td>
+                            <td>
+                                @if($list->link)
+                                    <a href="{{ $list->link }}" class="btn btn-info">
+                                        Link
+                                    </a>
+                                @else
+                                    {{-- Long dash --}}
+                                    &#8212;
+                                @endif
+                            </td>
+                        </tr>
+                        @endforeach
 
-            </table>
+                    </table>
+                </div>
+            </div>
+
+            <div class="second-table">
+                <div>
+                    <button id="table2-add-button" type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
+                        Add new wish
+                    </button>
+                    <table>
+                        <tr>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Description</th>
+                            <th>Price</th>
+                            <th>Link</th>
+                        </tr>
+                        @foreach($secondTable as $list)
+                            <tr>
+                                <td>{{ $list->id }}</td>
+                                <td>{{ $list->wish_name }}</td>
+                                <td>{{ $list->description }}</td>
+                                <td>{{ $list->price ? $list->price . ' BYN' : ' - ' }}</td>
+                                <td>
+                                    @if($list->link)
+                                        <a href="{{ $list->link }}" class="btn btn-info">
+                                            Link
+                                        </a>
+                                    @else
+                                        {{-- Long dash --}}
+                                        &#8212;
+                                    @endif
+                                </td>
+                            </tr>
+                        @endforeach
+                    </table>
+                </div>
+            </div>
         </div>
     </body>
+
 </html>

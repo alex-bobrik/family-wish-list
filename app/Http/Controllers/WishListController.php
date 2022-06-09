@@ -9,15 +9,20 @@ class WishListController extends Controller
 {
     public function index()
     {
-        $wishLists = WishList::all();
+        $firstTable = WishList::where('table_number', 0)->get();
+        $secondTable = WishList::where('table_number', 1)->get();
 
-        return view('lists', ['lists' => $wishLists]);
+        return view('lists', [
+            'firstTable' => $firstTable,
+            'secondTable' => $secondTable
+        ]);
     }
 
     public function addNewWish(Request $request)
     {
         $newWish = new WishList();
 
+        $newWish->table_number = $request->table_number;
         $newWish->wish_name = $request->wish_name;
         $newWish->description = $request->description;
         $newWish->price = $request->price;
