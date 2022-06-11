@@ -22,7 +22,7 @@ class WishListController extends Controller
     {
         $newWish = new WishList();
 
-        $newWish->table_number = $request->table_number;
+        $newWish->user_id = $request->user()->id;
         $newWish->wish_name = $request->wish_name;
         $newWish->description = $request->description;
         $newWish->price = $request->price;
