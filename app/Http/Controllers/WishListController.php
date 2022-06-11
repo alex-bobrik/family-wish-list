@@ -10,12 +10,11 @@ class WishListController extends Controller
 {
     public function index()
     {
-        $firstTable = WishList::where('table_number', 0)->get();
-        $secondTable = WishList::where('table_number', 1)->get();
+        $user = Auth::user();
+        $wishes = WishList::where('user_id', $user->id)->get();
 
         return view('lists', [
-            'firstTable' => $firstTable,
-            'secondTable' => $secondTable
+            'wishes' => $wishes
         ]);
     }
 

@@ -97,6 +97,7 @@
 
     </head>
     <body>
+    @extends('layouts.navbar')
 
         <!-- Modal -->
         <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -164,7 +165,7 @@
                             <th>Price</th>
                             <th>Link</th>
                         </tr>
-                        @foreach($firstTable as $list)
+                        @foreach($wishes as $list)
                         <tr>
                             <td>{{ $list->id }}</td>
                             <td>{{ $list->wish_name }}</td>
@@ -187,40 +188,40 @@
                 </div>
             </div>
 
-            <div class="second-table">
-                <div>
-                    <button id="table2-add-button" type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
-                        Add new wish
-                    </button>
-                    <table>
-                        <tr>
-                            <th>ID</th>
-                            <th>Name</th>
-                            <th>Description</th>
-                            <th>Price</th>
-                            <th>Link</th>
-                        </tr>
-                        @foreach($secondTable as $list)
-                            <tr>
-                                <td>{{ $list->id }}</td>
-                                <td>{{ $list->wish_name }}</td>
-                                <td>{{ $list->description }}</td>
-                                <td>{{ $list->price ? $list->price . ' BYN' : ' - ' }}</td>
-                                <td>
-                                    @if($list->link)
-                                        <a href="{{ $list->link }}" class="btn btn-info">
-                                            Link
-                                        </a>
-                                    @else
-                                        {{-- Long dash --}}
-                                        &#8212;
-                                    @endif
-                                </td>
-                            </tr>
-                        @endforeach
-                    </table>
-                </div>
-            </div>
+{{--            <div class="second-table">--}}
+{{--                <div>--}}
+{{--                    <button id="table2-add-button" type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">--}}
+{{--                        Add new wish--}}
+{{--                    </button>--}}
+{{--                    <table>--}}
+{{--                        <tr>--}}
+{{--                            <th>ID</th>--}}
+{{--                            <th>Name</th>--}}
+{{--                            <th>Description</th>--}}
+{{--                            <th>Price</th>--}}
+{{--                            <th>Link</th>--}}
+{{--                        </tr>--}}
+{{--                        @foreach($secondTable as $list)--}}
+{{--                            <tr>--}}
+{{--                                <td>{{ $list->id }}</td>--}}
+{{--                                <td>{{ $list->wish_name }}</td>--}}
+{{--                                <td>{{ $list->description }}</td>--}}
+{{--                                <td>{{ $list->price ? $list->price . ' BYN' : ' - ' }}</td>--}}
+{{--                                <td>--}}
+{{--                                    @if($list->link)--}}
+{{--                                        <a href="{{ $list->link }}" class="btn btn-info">--}}
+{{--                                            Link--}}
+{{--                                        </a>--}}
+{{--                                    @else--}}
+{{--                                        --}}{{-- Long dash --}}
+{{--                                        &#8212;--}}
+{{--                                    @endif--}}
+{{--                                </td>--}}
+{{--                            </tr>--}}
+{{--                        @endforeach--}}
+{{--                    </table>--}}
+{{--                </div>--}}
+{{--            </div>--}}
         </div>
     </body>
 
