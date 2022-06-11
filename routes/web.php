@@ -17,5 +17,12 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/lists', 'WishListController@index');
+Route::get('/lists', 'WishListController@index')->middleware('auth');
 Route::post('/add-new-wish', 'WishListController@addNewWish');
+
+Route::get('/register', 'RegistrationController@create');
+Route::post('register', 'RegistrationController@store');
+
+Route::get('/login', [ 'as' => 'login', 'uses' => 'SessionsController@create']);
+Route::post('/login', 'SessionsController@store');
+Route::get('/logout', 'SessionsController@destroy');
