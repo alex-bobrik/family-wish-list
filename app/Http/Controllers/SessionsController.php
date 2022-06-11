@@ -13,9 +13,9 @@ class SessionsController extends Controller
 
     public function store()
     {
-        if (!auth()->attempt(request(['email', 'password']))) {
+        if (!auth()->attempt(request(['username', 'password']))) {
             return back()->withErrors([
-                'message' => 'The email or password is incorrect, please try again'
+                'message' => 'The username or password is incorrect, please try again'
             ]);
         }
 
@@ -26,6 +26,6 @@ class SessionsController extends Controller
     {
         auth()->logout();
 
-        return redirect()->to('/lists');
+        return redirect()->to('/login');
     }
 }
