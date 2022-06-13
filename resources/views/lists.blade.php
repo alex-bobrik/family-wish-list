@@ -17,6 +17,11 @@
         <!-- JQuery -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 
+        <!-- React -->
+        <script crossorigin src="https://unpkg.com/react@16/umd/react.development.js"></script>
+        <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.25.0/babel.min.js"></script>
+
         <!-- Styles -->
         <style>
             html, body {
@@ -109,9 +114,6 @@
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
-
-
-
                     <form action="{{ url('add-new-wish') }}" method="post">
 
                         <div class="modal-body">
@@ -145,84 +147,99 @@
                             <button type="submit" class="btn btn-primary">Save changes</button>
                         </div>
                     </form>
-
                 </div>
             </div>
         </div>
         {{--End Modal--}}
 
-        <div class="full-height flex-center">
-            <div class="first-table">
-                <div>
-                    <button id="table1-add-button" type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
-                        Add new wish
-                    </button>
-                    <table>
-                        <tr>
-                            <th>ID</th>
-                            <th>Name</th>
-                            <th>Description</th>
-                            <th>Price</th>
-                            <th>Link</th>
-                        </tr>
-                        @foreach($wishes as $list)
-                        <tr>
-                            <td>{{ $list->id }}</td>
-                            <td>{{ $list->wish_name }}</td>
-                            <td>{{ $list->description }}</td>
-                            <td>{{ $list->price ? $list->price . ' BYN' : ' - ' }}</td>
-                            <td>
-                                @if($list->link)
-                                    <a href="{{ $list->link }}" class="btn btn-info">
-                                        Link
-                                    </a>
-                                @else
-                                    {{-- Long dash --}}
-                                    &#8212;
-                                @endif
-                            </td>
-                        </tr>
-                        @endforeach
 
-                    </table>
-                </div>
-            </div>
+    <div class="container">
+        <div id="wishesTable"></div>
+    </div>
 
-{{--            <div class="second-table">--}}
-{{--                <div>--}}
-{{--                    <button id="table2-add-button" type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">--}}
-{{--                        Add new wish--}}
-{{--                    </button>--}}
-{{--                    <table>--}}
-{{--                        <tr>--}}
-{{--                            <th>ID</th>--}}
-{{--                            <th>Name</th>--}}
-{{--                            <th>Description</th>--}}
-{{--                            <th>Price</th>--}}
-{{--                            <th>Link</th>--}}
-{{--                        </tr>--}}
-{{--                        @foreach($secondTable as $list)--}}
-{{--                            <tr>--}}
-{{--                                <td>{{ $list->id }}</td>--}}
-{{--                                <td>{{ $list->wish_name }}</td>--}}
-{{--                                <td>{{ $list->description }}</td>--}}
-{{--                                <td>{{ $list->price ? $list->price . ' BYN' : ' - ' }}</td>--}}
-{{--                                <td>--}}
-{{--                                    @if($list->link)--}}
-{{--                                        <a href="{{ $list->link }}" class="btn btn-info">--}}
-{{--                                            Link--}}
-{{--                                        </a>--}}
-{{--                                    @else--}}
-{{--                                        --}}{{-- Long dash --}}
-{{--                                        &#8212;--}}
-{{--                                    @endif--}}
-{{--                                </td>--}}
-{{--                            </tr>--}}
-{{--                        @endforeach--}}
-{{--                    </table>--}}
-{{--                </div>--}}
-{{--            </div>--}}
-        </div>
+
+    <script type="text/babel">
+
+        class Wish extends React.Component {
+
+            constructor(props) {
+                super(props);
+                this.state = {  wishes: [] };
+
+                // Set wishes for first display table for current user
+                this.setWishes({{\Illuminate\Support\Facades\Auth::id()}});
+            }
+
+            setWishes = (userId) => {
+                fetch(`/wishes?userId=${userId}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        this.setState({ wishes: data });
+                    })
+            }
+
+            // Get async json info about wishes
+            gettingWishes = async (e) => {
+                e.preventDefault();
+
+                const userId = e.target.elements.userId.value;
+
+                await this.setWishes(userId);
+            }
+
+            render() {
+                const { wishes } = this.state;
+                return (
+                    <div>
+                        <Form wishesMethod = {this.gettingWishes}/>
+                        <div>
+                            {wishes.map(wish =>
+                                <div>
+                                    <hr/>
+                                    {wish.name} ||
+                                    {wish.description} ||
+                                    {wish.link} ||
+                                    {wish.price}||
+                                    <hr/>
+                                </div>
+                            )}
+                        </div>
+                    </div>
+
+                );
+            }
+        }
+
+        class Form extends React.Component {
+
+            submitForm = () => {
+                this.formRef.dispatchEvent(
+                    new Event("submit", { bubbles: true, cancelable: true })
+                )
+            };
+
+            render() {
+                return(
+                    <form
+                        ref={ref => this.formRef = ref}
+                        onSubmit={this.props.wishesMethod}
+                    >
+                        <select aria-label="Default select example" name="userId" onChange={this.submitForm}>
+                            @foreach($ids as $id)
+                                <option
+                                    value="{{ $id }}"
+                                    {{ (\Illuminate\Support\Facades\Auth::id() == $id ? "selected":"") }}
+                                >{{ $id }}</option>
+                            @endforeach
+                        </select>
+                    </form>
+                )
+            }
+        }
+
+        ReactDOM.render(<Wish />, document.getElementById('wishesTable'));
+    </script>
+
     </body>
 
 </html>

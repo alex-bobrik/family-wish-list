@@ -27,3 +27,5 @@ Route::get('/login', [ 'as' => 'login', 'uses' => 'SessionsController@create']);
 Route::post('/login', 'SessionsController@store');
 Route::get('/logout', [ 'as' => 'logout', 'uses' => 'SessionsController@destroy']);
 
+Route::get('/wishes', 'WishListController@getUsersWishList')->name('getUsersWishList');
+

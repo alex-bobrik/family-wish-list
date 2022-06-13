@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\WishList;
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -12,9 +13,11 @@ class WishListController extends Controller
     {
         $user = Auth::user();
         $wishes = WishList::where('user_id', $user->id)->get();
+        $ids = User::all()->pluck('id');
 
         return view('lists', [
-            'wishes' => $wishes
+            'wishes' => $wishes,
+            'ids' => $ids,
         ]);
     }
 
@@ -30,5 +33,13 @@ class WishListController extends Controller
         $newWish->save();
 
         return redirect('lists');
+    }
+
+    public function getUsersWishList(Request $request)
+    {
+        $user_id = $request->input('userId');
+        $wishes = WishList::where('user_id', $user_id)->get();
+
+        return response()->json($wishes);
     }
 }
