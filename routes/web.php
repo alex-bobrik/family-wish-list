@@ -18,7 +18,7 @@ Route::get('/', function () {
 });
 
 Route::group(['middleware' => 'auth'], function () {
-    Route::get('/lists', 'WishListController@index');
+    Route::get('/lists', 'WishListController@index')->name('lists');
 
     // Update wish
     Route::post('/update-wish', 'WishListController@updateWish')->name('update-wish');
