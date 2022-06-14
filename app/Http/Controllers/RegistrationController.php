@@ -16,10 +16,9 @@ class RegistrationController extends Controller
     {
         $this->validate(request(), [
             'username' => 'required|unique:users,username',
-            'password' => 'required'
         ]);
 
-        $user = User::create(request(['username', 'password']));
+        $user = User::create(request(['username']));
 
         auth()->login($user);
 
