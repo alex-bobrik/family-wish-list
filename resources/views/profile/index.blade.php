@@ -9,6 +9,11 @@
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@200;600&display=swap" rel="stylesheet">
 
+        <!-- Scripts -->
+        <script src="{{ asset('js/app.js') }}" defer></script>
+        <!-- Styles -->
+        <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+
         <!-- Styles -->
         <style>
             html, body {
@@ -19,29 +24,72 @@
                 height: 100vh;
                 margin: 0;
             }
+
+
+
+            .center {
+                width: 400px;
+                height: 300px;
+                background-color: #f8f8f8;
+                position: absolute; /*Can also be `fixed`*/
+                left: 0;
+                right: 0;
+                top: 0;
+                bottom: 0;
+                margin: auto;
+                /*Solves a problem in which the content is being cut when the div is smaller than its' wrapper:*/
+                max-width: 100%;
+                max-height: 100%;
+
+                border-radius: 20px;
+                padding: 50px;
+            }
+
+            .btn-change-name {
+                width: 100%;
+            }
+
+            /* Display errors under navbar */
+            .error-block {
+                padding-top: 60px;
+            }
+
         </style>
     </head>
     <body>
 
-        @if ($errors->any())
-            <div class="alert alert-danger">
-                <ul>
-                    @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-            </div>
-        @endif
 
-        <div class="container">
-            Current user: {{ $user->username }}
-            <form action="{{ url('profile/update-username') }}" method="post">
-                @csrf
-            <label>
-                <input type="text" name="new_profile_name" value="{{ \Illuminate\Support\Facades\Auth::user()->username }}">
-            </label>
-                <input type="submit" value="change name" class="btn btn-primary">
-            </form>
-        </div>
+    @extends('layouts.navbar')
+
+
+    <div class="error-block">
+        @extends('layouts.errors')
+    </div>
+
+    <div class="center shadow-lg">
+
+        <h5>
+            Current username: {{ $user->username }}
+        </h5>
+        <hr>
+        <form action="{{ url('profile/update-username') }}" method="post">
+            @csrf
+            <div class="form-group">
+                <label for="new_profile_name">New profile username:</label>
+                <input
+                    type="text"
+                    name="new_profile_name"
+                    value="{{ \Illuminate\Support\Facades\Auth::user()->username }}"
+                    class="form-control"
+                >
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="Change username" class="btn btn-success btn-change-name">
+            </div>
+
+
+        </form>
+    </div>
     </body>
 </html>
