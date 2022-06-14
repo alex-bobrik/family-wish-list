@@ -29,8 +29,8 @@
             color: #636b6f;
             font-family: 'Nunito', sans-serif;
             font-weight: 200;
-            height: 100vh;
-            margin: 0;
+            /*height: 100vh;*/
+            /*margin: 0;*/
         }
 
         .full-height {
@@ -84,32 +84,58 @@
         }
 
         table {
-            width: 100%;
+            table-layout: fixed;
+            white-space: normal !important;
+            word-wrap: break-word;
+        }
+
+        .add-wish-btn {
+            float: left;
+            width: 15%;
+            margin-bottom: 5px;
+            margin-right: 2px;
+        }
+
+        .select-user-form {
+            float: left;
+            width: 25%;
+            margin-bottom: 5px;
+
+        }
+
+        .search-box {
+            float: right;
+            width: 50%;
+            margin-bottom: 5px;
+
+        }
+
+        #wishesTable {
+            margin-top: 70px;
+        }
+
+        .currentUserSelect {
+            background-color: #ECF9EC;
+        }
+
+        @media screen and (max-width: 1000px) {
+            .add-wish-btn {width: 100%;}
         }
 
     </style>
-    <script>
-        $(document).ready(function () {
-            $("#table1-add-button").click(function () {
-                $("#table_number").val(0);
-            });
-
-            $("#table2-add-button").click(function () {
-                $("#table_number").val(1);
-            });
-        });
-    </script>
 
 
 </head>
 <body>
-@extends('layouts.navbar')
 
 <!-- Modals -->
 @extends('layouts.update-wish-modal')
 @extends('layouts.delete-wish-modal')
 {{--End Modals--}}
 
+<div class="navbarr">
+    @extends('layouts.navbar')
+</div>
 
 <div class="container">
     <div id="wishesTable"></div>
@@ -178,81 +204,71 @@
 
             const wishes = this.state.searchInput.length ? this.state.filteredData : this.state.wishes;
             return (
-                <div>
+                <div className="table-responsive-sm">
                     <Form wishesMethod={this.gettingWishes}/>
 
-                    <div>
-
-
-                        <div className="table-title">
-                            <div className="row">
-                                <div className="col-sm-6"></div>
-                                <div className="col-sm-6">
-                                    <div className="search-box">
-                                        <div className="input-group">
-                                            <input
-                                                type="text"
-                                                id="search"
-                                                className="form-control"
-                                                placeholder="Search by Name"
-                                                onChange={e => this.globalSearch(e.target.value)}
-                                            />
-                                            <span className="input-group-addon"><i className="fas fa-camera fa-xs"></i></span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                    <div className="search-box">
+                        <div className="input-group">
+                            <input
+                                type="text"
+                                id="search"
+                                className="form-control"
+                                placeholder="Search by Name"
+                                onChange={e => this.globalSearch(e.target.value)}
+                            />
+                            <span className="input-group-addon"><i className="fas fa-camera fa-xs"></i></span>
                         </div>
-
-
-                        <table className="table table-striped table-bordered table-sm">
-                            <tr>
-                                <th>ID</th>
-                                <th>Wish name</th>
-                                <th>Description</th>
-                                <th>Price</th>
-                                <th>Link</th>
-                            </tr>
-                        {wishes.map(wish => {
-                                if (wish.user_id === {{ \Illuminate\Support\Facades\Auth::id() }}) {
-                                    return (<tr>
-                                        <td>{ wish.id }</td>
-                                        <td>{ wish.wish_name }</td>
-                                        <td>{ wish.description }</td>
-                                        <td>{ wish.price }</td>
-                                        <td>{ wish.link }</td>
-
-                                        <td>
-                                            <button
-                                                value={wish.id}
-                                                className="btn btn-info"
-                                                data-toggle="modal"
-                                                data-target="#exampleModalCenter"
-                                                // onClick={e => $('#wish_name').val(e.target.value)} // value = wish.id
-                                                onClick={e => this.setDataToModal(e, wish)} // set in func form method to put
-                                            >edit</button>
-                                            <button
-                                                className="btn btn-danger"
-                                                data-toggle="modal"
-                                                data-target="#exampleModalCenterDelete"
-                                                onClick={e => $('#delete_wish_id').val(wish.id)}
-                                            >delete
-                                            </button>
-                                        </td>
-                                    </tr>)
-                                }
-                                    return (
-                                    <tr>
-                                       <td>{wish.id}</td>
-                                       <td>{wish.wish_name}</td>
-                                       <td>{wish.description}</td>
-                                       <td>{wish.price}</td>
-                                       <td>{wish.link}</td>
-                                    </tr>)
-                            }
-                        )}
-                        </table>
                     </div>
+
+
+                    <table className="table table-striped">
+                        <thead>
+                        <tr>
+                            <th>Wish name</th>
+                            <th>Description</th>
+                            <th>Price</th>
+                            <th>Link</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                    {wishes.map(wish => {
+                            if (wish.user_id === {{ \Illuminate\Support\Facades\Auth::id() }}) {
+                                return (<tr>
+                                    <td>{ wish.wish_name }</td>
+                                    <td>{ wish.description }</td>
+                                    <td>{ wish.price }</td>
+                                    <td>{ wish.link }</td>
+
+                                    <td>
+                                        <button
+                                            value={wish.id}
+                                            className="btn btn-xs btn-info"
+                                            data-toggle="modal"
+                                            data-target="#exampleModalCenter"
+                                            // onClick={e => $('#wish_name').val(e.target.value)} // value = wish.id
+                                            onClick={e => this.setDataToModal(e, wish)} // set in func form method to put
+                                        >e</button>
+                                        <button
+                                            className="btn btn-xs btn-danger"
+                                            data-toggle="modal"
+                                            data-target="#exampleModalCenterDelete"
+                                            onClick={e => $('#delete_wish_id').val(wish.id)}
+                                        >d
+                                        </button>
+                                    </td>
+                                </tr>)
+                            }
+                                return (
+                                <tr>
+                                   <td>{wish.wish_name}</td>
+                                   <td>{wish.description}</td>
+                                   <td>{wish.price}</td>
+                                   <td>{wish.link}</td>
+                                </tr>)
+                        }
+                    )}
+                        </tbody>
+                    </table>
                 </div>
             );
         }
@@ -277,7 +293,7 @@
                 <div>
                     <button
                         type="button"
-                        className="btn btn-primary"
+                        className="btn btn-success add-wish-btn"
                         data-toggle="modal"
                         data-target="#exampleModalCenter"
                         onClick={this.resetForm}
@@ -288,12 +304,15 @@
                     <form
                         ref={ref => this.formRef = ref}
                         onSubmit={this.props.wishesMethod}
+                        className="select-user-form"
                     >
-                        <select aria-label="Default select example" name="userId" onChange={this.submitForm}>
+                        <select aria-label="Default select example" name="userId" onChange={this.submitForm} className="form-control">
                             @foreach($users as $user)
                             <option
                                 value="{{ $user->id }}"
                                 {{ (\Illuminate\Support\Facades\Auth::id() == $user->id ? "selected":"") }}
+                                    className="{{ (\Illuminate\Support\Facades\Auth::id() == $user->id ? "currentUserSelect":"") }}"
+
                             >{{ $user->username }}</option>
                             @endforeach
                         </select>
