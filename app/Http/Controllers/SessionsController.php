@@ -2,22 +2,28 @@
 
 namespace App\Http\Controllers;
 
+use App\User;
+use Doctrine\DBAL\Exception;
 use Illuminate\Http\Request;
 
 class SessionsController extends Controller
 {
     public function create()
     {
-        return view('sessions.create');
+        $usernames = User::all()->pluck('username');
+
+        return view('sessions.create', [
+            'usernames' => $usernames,
+        ]);
     }
 
     public function store()
     {
-        if (!auth()->attempt(request(['username', 'password']))) {
-            return back()->withErrors([
-                'message' => 'The username or password is incorrect, please try again'
-            ]);
-        }
+        $user = User::where('username', \request(['username']))->first();
+        if (!$user)
+            return 404;
+
+        auth()->login($user);
 
         return redirect()->to('/lists');
     }

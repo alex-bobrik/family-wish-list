@@ -66,17 +66,18 @@
     <body>
     <h2>Log In</h2>
 
-    <form method="POST" action="/login">
+    <form method="POST" action="{{ url('login') }}">
         {{ csrf_field() }}
         <div class="form-group">
-            <label for="username">Username:</label>
-            <input type="text" class="form-control" id="username" name="username">
+
+            <select name="username">
+                @foreach($usernames as $username)
+                    <option value="{{ $username }}">{{ $username  }}</option>
+                @endforeach
+            </select>
         </div>
 
-        <div class="form-group">
-            <label for="password">Password:</label>
-            <input type="password" class="form-control" id="password" name="password">
-        </div>
+        <input type="hidden" value="" name="password">
 
         <div class="form-group">
             <button style="cursor:pointer" type="submit" class="btn btn-primary">Login</button>
