@@ -13,26 +13,45 @@ class WishListController extends Controller
     {
         $user = Auth::user();
         $wishes = WishList::where('user_id', $user->id)->get();
-        $ids = User::all()->pluck('id');
+        $users= User::all();
 
         return view('lists', [
             'wishes' => $wishes,
-            'ids' => $ids,
+            'users' => $users,
         ]);
     }
 
-    public function addNewWish(Request $request)
+    public function updateWish(Request $request)
     {
-        $newWish = new WishList();
+        $wish_id = $request->id;
 
-        $newWish->user_id = $request->user()->id;
-        $newWish->wish_name = $request->wish_name;
-        $newWish->description = $request->description;
-        $newWish->price = $request->price;
-        $newWish->link = $request->link;
-        $newWish->save();
+        if (!$wish_id) {
+            // Add new wish
+            $new_wish = new WishList();
+
+            $new_wish->wish_name = $request->wish_name;
+            $new_wish->user_id = $request->user()->id;
+            $new_wish->description = $request->description;
+            $new_wish->price = $request->price;
+            $new_wish->link = $request->link;
+            $new_wish->save();
+        }
+        else {
+            // Edit existing wish
+            WishList::where('id', $wish_id)->update([
+                'wish_name' => $request->wish_name,
+                'description' => $request->description,
+                'price' => $request->price,
+                'link' => $request->link,
+            ]);
+        }
 
         return redirect('lists');
+    }
+
+    public function deleteWish(Request $request)
+    {
+
     }
 
     public function getUsersWishList(Request $request)
