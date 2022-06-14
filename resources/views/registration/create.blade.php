@@ -9,6 +9,13 @@
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@200;600&display=swap" rel="stylesheet">
 
+
+        <!-- Scripts -->
+        <script src="{{ asset('js/app.js') }}" defer></script>
+        <!-- Styles -->
+        <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+
+
         <!-- Styles -->
         <style>
             html, body {
@@ -61,20 +68,58 @@
             .m-b-md {
                 margin-bottom: 30px;
             }
+
+            .center {
+                width: 400px;
+                height: 300px;
+                background-color: #f8f8f8;
+                position: absolute; /*Can also be `fixed`*/
+                left: 0;
+                right: 0;
+                top: 0;
+                bottom: 0;
+                margin: auto;
+                /*Solves a problem in which the content is being cut when the div is smaller than its' wrapper:*/
+                max-width: 100%;
+                max-height: 100%;
+
+                border-radius: 20px;
+                padding: 50px;
+            }
+
+            .btn-register {
+                width: 100%;
+            }
+
+
         </style>
     </head>
     <body>
-    <h2>Register</h2>
-    <form method="POST" action="{{url('register')}}">
-        {{ csrf_field() }}
-        <div class="form-group">
-            <label for="username">Username:</label>
-            <input type="text" class="form-control" id="username" name="username">
-        </div>
 
-        <div class="form-group">
-            <button style="cursor:pointer" type="submit" class="btn btn-primary">Submit</button>
-        </div>
-    </form>
+
+    @extends('layouts.errors')
+    <div class="center shadow-lg">
+
+        <h2>Register</h2>
+        <form method="POST" action="{{url('register')}}">
+            {{ csrf_field() }}
+            <div class="form-group">
+                <label for="username">Username:</label>
+                <input type="text" class="form-control" id="username" name="username">
+            </div>
+
+            <div class="form-group">
+                <button type="submit" class="btn btn-success btn-register">Register</button>
+            </div>
+
+            <div class="form-group" style="text-align: center">
+                <p>
+                    Have an account yet? <a href="{{ url('login') }}">Login</a>
+                </p>
+            </div>
+        </form>
+    </div>
+
+
     </body>
 </html>

@@ -9,6 +9,11 @@
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@200;600&display=swap" rel="stylesheet">
 
+        <!-- Scripts -->
+        <script src="{{ asset('js/app.js') }}" defer></script>
+        <!-- Styles -->
+        <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+
         <!-- Styles -->
         <style>
             html, body {
@@ -61,16 +66,47 @@
             .m-b-md {
                 margin-bottom: 30px;
             }
+
+
+            .center {
+                width: 400px;
+                height: 300px;
+                background-color: #f8f8f8;
+                position: absolute; /*Can also be `fixed`*/
+                left: 0;
+                right: 0;
+                top: 0;
+                bottom: 0;
+                margin: auto;
+                /*Solves a problem in which the content is being cut when the div is smaller than its' wrapper:*/
+                max-width: 100%;
+                max-height: 100%;
+
+                border-radius: 20px;
+                padding: 50px;
+            }
+
+            .btn-login {
+                width: 100%;
+            }
+
         </style>
     </head>
     <body>
+
+
+    @extends('layouts.errors')
+
+    <div class="center shadow-lg">
+
+
     <h2>Log In</h2>
 
     <form method="POST" action="{{ url('login') }}">
         {{ csrf_field() }}
         <div class="form-group">
 
-            <select name="username">
+            <select name="username" class="form-control">
                 @foreach($usernames as $username)
                     <option value="{{ $username }}">{{ $username  }}</option>
                 @endforeach
@@ -80,8 +116,13 @@
         <input type="hidden" value="" name="password">
 
         <div class="form-group">
-            <button style="cursor:pointer" type="submit" class="btn btn-primary">Login</button>
+            <button type="submit" class="btn btn-success btn-login">Login</button>
+        </div>
+        <div class="form-group" style="text-align: center">
+            <p>Don't have an account? <a href="{{ url('register') }}">Register</a></p>
         </div>
     </form>
+    </div>
+
     </body>
 </html>
