@@ -100,24 +100,15 @@
         });
     </script>
 
-    <script>
-        $(document).ready(function () {
-            $("#btnSubmit").click(function () {
-                alert("button");
-            });
-        });
-
-
-    </script>
-
 
 </head>
 <body>
 @extends('layouts.navbar')
 
-<!-- Modal -->
+<!-- Modals -->
 @extends('layouts.update-wish-modal')
-{{--End Modal--}}
+@extends('layouts.delete-wish-modal')
+{{--End Modals--}}
 
 
 <div class="container">
@@ -172,27 +163,43 @@
                 <div>
                     <Form wishesMethod={this.gettingWishes}/>
                     <div>
-                        {wishes.map(wish =>
-                            <div>
-                                <hr/>
-                                {wish.wish_name} ||
-                                {wish.description} ||
-                                {wish.link} ||
-                                {wish.price}||
+                        {wishes.map(wish => {
+                                if (wish.user_id === {{ \Illuminate\Support\Facades\Auth::id() }}) {
+                                    return (<div>
+                                        <hr/>
+                                        {wish.wish_name} ||
+                                        {wish.description} ||
+                                        {wish.link} ||
+                                        {wish.price}||
 
-                                <button
-                                    value={wish.id}
-                                    className="btn btn-info"
-                                    data-toggle="modal"
-                                    data-target="#exampleModalCenter"
-                                    id="btnSubmit"
-                                    // onClick={e => $('#wish_name').val(e.target.value)} // value = wish.id
-                                    onClick={e => this.setDataToModal(e, wish)} // set in func form method to put
-                                >edit</button>
-                                <button className="btn btn-danger">delete</button>
 
-                                <hr/>
-                            </div>
+                                        <button
+                                            value={wish.id}
+                                            className="btn btn-info"
+                                            data-toggle="modal"
+                                            data-target="#exampleModalCenter"
+                                            // onClick={e => $('#wish_name').val(e.target.value)} // value = wish.id
+                                            onClick={e => this.setDataToModal(e, wish)} // set in func form method to put
+                                        >edit</button>
+                                        <button
+                                            className="btn btn-danger"
+                                            data-toggle="modal"
+                                            data-target="#exampleModalCenterDelete"
+                                            onClick={e => $('#delete_wish_id').val(wish.id)}
+                                        >delete
+                                        </button>
+                                        <hr/>
+                                    </div>)
+                                }
+                                    return (
+                                    <div>
+                                        <hr/>
+                                        {wish.wish_name} ||
+                                        {wish.description} ||
+                                        {wish.link} ||
+                                        {wish.price}||
+                                    </div>)
+                            }
                         )}
                     </div>
                 </div>

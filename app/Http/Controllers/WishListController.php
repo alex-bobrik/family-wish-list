@@ -51,7 +51,14 @@ class WishListController extends Controller
 
     public function deleteWish(Request $request)
     {
+        $delete_wish_id = $request->delete_wish_id;
 
+        if (!$delete_wish_id)
+            return response()->json(['message' => 'error message'], 500);
+
+        WishList::where('id', $delete_wish_id)->delete();
+
+        return redirect('lists');
     }
 
     public function getUsersWishList(Request $request)
