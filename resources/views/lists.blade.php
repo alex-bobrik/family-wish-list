@@ -127,6 +127,15 @@
             .add-wish-btn {width: 100%;}
         }
 
+        .simplified-link {
+            display: inline-block;
+            width: 70px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+
     </style>
 
 
@@ -239,11 +248,21 @@
                     {wishes.map(wish => {
                             if (wish.user_id === {{ \Illuminate\Support\Facades\Auth::id() }}) {
                                 return (<tr>
-                                    <td>{ wish.wish_name }</td>
-                                    <td>{ wish.description }</td>
-                                    <td>{ wish.price }</td>
-                                    <td>{ wish.link }</td>
+                                    <td>
+                                        { wish.wish_name }
+                                    </td>
+                                    <td>
+                                        { wish.description ? wish.description : <span>&#8212;</span> }
+                                    </td>
+                                    <td>
+                                        { wish.price ? wish.price + " BYN" : <span>&#8212;</span> }
+                                    </td>
 
+                                    <td>
+                                        { wish.link
+                                            ? <a href={ wish.link } className="simplified-link">{ wish.link }</a>
+                                            : <span>&#8212;</span> }
+                                    </td>
                                     <td>
                                         <button
                                             value={wish.id}
