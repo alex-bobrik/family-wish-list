@@ -13,6 +13,7 @@
 
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@200;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
     <!-- JQuery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
@@ -28,9 +29,13 @@
             background-color: #fff;
             color: #636b6f;
             font-family: 'Nunito', sans-serif;
-            font-weight: 200;
+            font-weight: 300;
             /*height: 100vh;*/
             /*margin: 0;*/
+        }
+
+        nav {
+            font-weight: 600;
         }
 
         .full-height {
@@ -242,18 +247,21 @@
                                     <td>
                                         <button
                                             value={wish.id}
-                                            className="btn btn-xs btn-info"
+                                            className="btn btn-lg"
                                             data-toggle="modal"
                                             data-target="#exampleModalCenter"
                                             // onClick={e => $('#wish_name').val(e.target.value)} // value = wish.id
                                             onClick={e => this.setDataToModal(e, wish)} // set in func form method to put
-                                        >e</button>
+                                        >
+                                            <i className="fa fa-pencil"></i>
+                                        </button>
                                         <button
-                                            className="btn btn-xs btn-danger"
+                                            className="btn btn-lg"
                                             data-toggle="modal"
                                             data-target="#exampleModalCenterDelete"
                                             onClick={e => $('#delete_wish_id').val(wish.id)}
-                                        >d
+                                        >
+                                            <i className="fa fa-trash"></i>
                                         </button>
                                     </td>
                                 </tr>)
