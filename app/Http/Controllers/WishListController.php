@@ -23,7 +23,7 @@ class WishListController extends Controller
 
     public function updateWish(Request $request)
     {
-        $wish_id = $request->id;
+        $wish_id = $request->wish_id;
 
         if (!$wish_id) {
             // Add new wish

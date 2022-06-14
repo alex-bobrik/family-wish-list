@@ -122,7 +122,11 @@
 
         constructor(props) {
             super(props);
-            this.state = {wishes: []};
+            this.state = {
+                wishes: [],
+                filteredData: [],
+                searchInput: ""
+            };
 
             // Set wishes for first display table for current user
             this.setWishes({{\Illuminate\Support\Facades\Auth::id()}});
@@ -145,65 +149,111 @@
             $('#wish_id').val(wish.id);
         }
 
-        setDataToDeleteModal = (e) => {
-        }
-
         // Get async json info about wishes
         gettingWishes = async (e) => {
             e.preventDefault();
+
+            // Clear input
+            $("#search").val("");
+            this.setState({searchInput: ""});
 
             const userId = e.target.elements.userId.value;
 
             await this.setWishes(userId);
         }
 
+        globalSearch = (searchText) => {
+            let { wishes } = this.state;
+            this.setState({searchInput: searchText});
+            let filteredData = wishes.filter(value => {
+                return (
+                    // Search by wish name
+                    value.wish_name.toLowerCase().includes(searchText.toLowerCase())
+                );
+            });
+            this.setState({ filteredData });
+        };
+
         render() {
-            const {wishes} = this.state;
+
+            const wishes = this.state.searchInput.length ? this.state.filteredData : this.state.wishes;
             return (
                 <div>
                     <Form wishesMethod={this.gettingWishes}/>
+
                     <div>
+
+
+                        <div className="table-title">
+                            <div className="row">
+                                <div className="col-sm-6"></div>
+                                <div className="col-sm-6">
+                                    <div className="search-box">
+                                        <div className="input-group">
+                                            <input
+                                                type="text"
+                                                id="search"
+                                                className="form-control"
+                                                placeholder="Search by Name"
+                                                onChange={e => this.globalSearch(e.target.value)}
+                                            />
+                                            <span className="input-group-addon"><i className="fas fa-camera fa-xs"></i></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <table className="table table-striped table-bordered table-sm">
+                            <tr>
+                                <th>ID</th>
+                                <th>Wish name</th>
+                                <th>Description</th>
+                                <th>Price</th>
+                                <th>Link</th>
+                            </tr>
                         {wishes.map(wish => {
                                 if (wish.user_id === {{ \Illuminate\Support\Facades\Auth::id() }}) {
-                                    return (<div>
-                                        <hr/>
-                                        {wish.wish_name} ||
-                                        {wish.description} ||
-                                        {wish.link} ||
-                                        {wish.price}||
+                                    return (<tr>
+                                        <td>{ wish.id }</td>
+                                        <td>{ wish.wish_name }</td>
+                                        <td>{ wish.description }</td>
+                                        <td>{ wish.price }</td>
+                                        <td>{ wish.link }</td>
 
-
-                                        <button
-                                            value={wish.id}
-                                            className="btn btn-info"
-                                            data-toggle="modal"
-                                            data-target="#exampleModalCenter"
-                                            // onClick={e => $('#wish_name').val(e.target.value)} // value = wish.id
-                                            onClick={e => this.setDataToModal(e, wish)} // set in func form method to put
-                                        >edit</button>
-                                        <button
-                                            className="btn btn-danger"
-                                            data-toggle="modal"
-                                            data-target="#exampleModalCenterDelete"
-                                            onClick={e => $('#delete_wish_id').val(wish.id)}
-                                        >delete
-                                        </button>
-                                        <hr/>
-                                    </div>)
+                                        <td>
+                                            <button
+                                                value={wish.id}
+                                                className="btn btn-info"
+                                                data-toggle="modal"
+                                                data-target="#exampleModalCenter"
+                                                // onClick={e => $('#wish_name').val(e.target.value)} // value = wish.id
+                                                onClick={e => this.setDataToModal(e, wish)} // set in func form method to put
+                                            >edit</button>
+                                            <button
+                                                className="btn btn-danger"
+                                                data-toggle="modal"
+                                                data-target="#exampleModalCenterDelete"
+                                                onClick={e => $('#delete_wish_id').val(wish.id)}
+                                            >delete
+                                            </button>
+                                        </td>
+                                    </tr>)
                                 }
                                     return (
-                                    <div>
-                                        <hr/>
-                                        {wish.wish_name} ||
-                                        {wish.description} ||
-                                        {wish.link} ||
-                                        {wish.price}||
-                                    </div>)
+                                    <tr>
+                                       <td>{wish.id}</td>
+                                       <td>{wish.wish_name}</td>
+                                       <td>{wish.description}</td>
+                                       <td>{wish.price}</td>
+                                       <td>{wish.link}</td>
+                                    </tr>)
                             }
                         )}
+                        </table>
                     </div>
                 </div>
-
             );
         }
     }
