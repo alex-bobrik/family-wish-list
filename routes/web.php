@@ -24,6 +24,11 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/update-wish', 'WishListController@updateWish')->name('update-wish');
     // Delete wish
     Route::post('/delete-wish', 'WishListController@deleteWish')->name('delete-wish');
+
+    // Profile page
+    Route::get('/profile', 'ProfileController@index')->name('profile');
+    // Update username
+    Route::post('profile/update-username', 'ProfileController@updateUsername')->name('updateUsername');
 });
 
 Route::get('/wishes', 'WishListController@getUsersWishList')->name('getUsersWishList');
