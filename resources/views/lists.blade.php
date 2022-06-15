@@ -188,6 +188,10 @@
             $('#price').val(wish.price);
             $('#link').val(wish.link);
             $('#wish_id').val(wish.id);
+
+            let modalTitle = document.getElementById('modalTitle');
+            modalTitle.textContent = "{{ __('messages.update-wish') }}";
+
         }
 
         // Get async json info about wishes
@@ -313,6 +317,9 @@
         resetForm = () => {
             let form = $('#updateWishForm');
             form[0].reset();
+
+            let modalTitle = document.getElementById('modalTitle');
+            modalTitle.textContent = "{{ __('messages.add-new-wish') }}";
         }
 
         render() {
