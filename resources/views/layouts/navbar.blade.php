@@ -6,21 +6,31 @@
     <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav">
             <li class="nav-item">
-                <a class="nav-link" href="{{ route('lists') }}">Wishes list</a>
+                <a class="nav-link" href="{{ route('lists') }}">
+                    {{ __('messages.wishes-list') }}
+                </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="{{ route('login') }}">Login</a>
+                <a class="nav-link" href="{{ route('login') }}">
+                    {{ __('messages.login') }}
+                </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="{{ route('register') }}">Register</a>
+                <a class="nav-link" href="{{ route('register') }}">
+                    {{ __('messages.register') }}
+                </a>
             </li>
         </ul>
         <div class="navbar-nav ml-auto">
             <li class="nav-item">
-                <a class="nav-link" href="{{route('profile')}}">Profile</a>
+                <a class="nav-link" href="{{route('profile')}}">
+                    {{ __('messages.profile') }}
+                </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="{{route('logout')}}">Logout</a>
+                <a class="nav-link" href="{{route('logout')}}">
+                    {{ __('messages.logout') }}
+                </a>
             </li>
         </div>
     </div>

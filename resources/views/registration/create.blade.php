@@ -104,17 +104,22 @@
         <form method="POST" action="{{url('register')}}">
             {{ csrf_field() }}
             <div class="form-group">
-                <label for="username">Username:</label>
+                <label for="username">
+                    {{ __('messages.username') }}:
+                </label>
                 <input type="text" class="form-control" id="username" name="username">
             </div>
 
             <div class="form-group">
-                <button type="submit" class="btn btn-success btn-register">Register</button>
+                <button type="submit" class="btn btn-success btn-register">
+                    {{ __('messages.register') }}
+                </button>
             </div>
 
             <div class="form-group" style="text-align: center">
                 <p>
-                    Have an account yet? <a href="{{ url('login') }}">Login</a>
+                    {{ __('messages.have-account') }}
+                    <a href="{{ url('login') }}">{{ __('messages.login') }}</a>
                 </p>
             </div>
         </form>

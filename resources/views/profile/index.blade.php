@@ -69,13 +69,15 @@
     <div class="center shadow-lg">
 
         <h5>
-            Current username: {{ $user->username }}
+            {{ __('messages.current-username') }}: {{ $user->username }}
         </h5>
         <hr>
         <form action="{{ url('profile/update-username') }}" method="post">
             @csrf
             <div class="form-group">
-                <label for="new_profile_name">New profile username:</label>
+                <label for="new_profile_name">
+                    {{ __('messages.new-username') }}
+                </label>
                 <input
                     type="text"
                     name="new_profile_name"
@@ -85,7 +87,7 @@
             </div>
 
             <div class="form-group">
-                <input type="submit" value="Change username" class="btn btn-success btn-change-name">
+                <input type="submit" value="{{ __('messages.change-username') }}" class="btn btn-success btn-change-name">
             </div>
 
 

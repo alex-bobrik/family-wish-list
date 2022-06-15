@@ -116,10 +116,15 @@
         <input type="hidden" value="" name="password">
 
         <div class="form-group">
-            <button type="submit" class="btn btn-success btn-login">Login</button>
+            <button type="submit" class="btn btn-success btn-login">
+                {{ __('messages.login') }}
+            </button>
         </div>
         <div class="form-group" style="text-align: center">
-            <p>Don't have an account? <a href="{{ url('register') }}">Register</a></p>
+            <p>
+                {{ __('messages.dont-have-account') }}
+                <a href="{{ url('register') }}">{{ __('messages.register') }}</a>
+            </p>
         </div>
     </form>
     </div>

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+{{--<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">--}}
+<html lang="ru">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -227,10 +228,9 @@
                                 type="text"
                                 id="search"
                                 className="form-control"
-                                placeholder="Search by Name"
+                                placeholder="{{ __('messages.search-by-wish-name') }}"
                                 onChange={e => this.globalSearch(e.target.value)}
                             />
-                            <span className="input-group-addon"><i className="fas fa-camera fa-xs"></i></span>
                         </div>
                     </div>
 
@@ -238,10 +238,10 @@
                     <table className="table table-striped">
                         <thead>
                         <tr>
-                            <th>Wish name</th>
-                            <th>Description</th>
-                            <th>Price</th>
-                            <th>Link</th>
+                            <th>{{ __('messages.wish-name') }}</th>
+                            <th>{{ __('messages.description') }}</th>
+                            <th>{{ __('messages.price') }}</th>
+                            <th>{{ __('messages.link') }}</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -325,7 +325,7 @@
                         data-target="#exampleModalCenter"
                         onClick={this.resetForm}
                     >
-                        Add new wish
+                        {{ __('messages.add-new-wish') }}
                     </button>
 
                     <form

@@ -12,22 +12,22 @@
                 <div class="modal-body">
                     @csrf
                     <div>
-                        <label for="wish_name">Wish name</label>
+                        <label for="wish_name">{{ __('messages.wish-name') }}</label>
                         <input type="text" class="form-control" name="wish_name" required id="wish_name">
                     </div>
 
                     <div>
-                        <label for="description">Description</label>
+                        <label for="description">{{ __('messages.description') }}</label>
                         <input type="text" class="form-control" name="description" id="description">
                     </div>
 
                     <div>
-                        <label for="price">Price</label>
+                        <label for="price">{{ __('messages.price') }}</label>
                         <input type="number" class="form-control" name="price" min="0" max="999999" id="price">
                     </div>
 
                     <div>
-                        <label for="link">Link</label>
+                        <label for="link">{{ __('messages.link') }}</label>
                         <input type="text" class="form-control" name="link" id="link">
                     </div>
                     <div>
@@ -36,8 +36,12 @@
                 </div>
 
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">Save changes</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                        {{ __('messages.close') }}
+                    </button>
+                    <button type="submit" class="btn btn-primary">
+                        {{ __('messages.save-changes') }}
+                    </button>
                 </div>
             </form>
         </div>
