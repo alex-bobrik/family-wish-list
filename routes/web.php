@@ -13,11 +13,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
 Route::group(['middleware' => 'auth'], function () {
+    Route::redirect('/', '/lists');
     Route::get('/lists', 'WishListController@index')->name('lists');
 
     // Update wish
@@ -32,7 +29,6 @@ Route::group(['middleware' => 'auth'], function () {
 });
 
 Route::get('/wishes', 'WishListController@getUsersWishList')->name('getUsersWishList');
-
 
 // Sessions
 Route::get('/register', [ 'as' => 'register', 'uses' => 'RegistrationController@create']);
