@@ -174,7 +174,9 @@
                                     }
                                 ) : (
                                     <div className="no-wishes-message">
-                                        <h1 className="shadow-sm">No wishes here yet</h1>
+                                        <h1 className="shadow-sm">
+                                            {{ __('messages.no-wishes-yet') }}
+                                        </h1>
                                     </div>
                                     )}
                                 </tbody>

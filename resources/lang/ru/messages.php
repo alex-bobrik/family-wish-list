@@ -29,4 +29,5 @@ return [
     'price' => 'Цена',
     'link' => 'Ссылка',
     'search-by-wish-name' => 'Поиск желаний',
+    'no-wishes-yet' => 'Здесь пока нет желаний',
 ];

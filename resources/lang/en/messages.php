@@ -29,5 +29,6 @@ return [
     'price' => 'Price',
     'link' => 'Link',
     'search-by-wish-name' => 'Search by wish name',
+    'no-wishes-yet' => 'There is no wishes here yet',
 
 ];
