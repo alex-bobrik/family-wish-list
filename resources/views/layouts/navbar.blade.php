@@ -21,7 +21,7 @@
                 </a>
             </li>
         </ul>
-        <div class="navbar-nav ml-auto">
+        <ul class="navbar-nav ml-auto">
             <li class="nav-item">
                 <a class="nav-link" href="{{route('profile')}}">
                     {{ __('messages.profile') }}
@@ -32,6 +32,6 @@
                     {{ __('messages.logout') }}
                 </a>
             </li>
-        </div>
+        </ul>
     </div>
 </nav>
