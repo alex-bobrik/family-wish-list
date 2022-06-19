@@ -11,9 +11,9 @@ class WishListController extends Controller
 {
     public function index()
     {
-        $user = Auth::user();
+        $user   = Auth::user();
         $wishes = WishList::where('user_id', $user->id)->get();
-        $users= User::all();
+        $users  = User::all();
 
         return view('lists', [
             'wishes' => $wishes,
@@ -26,23 +26,24 @@ class WishListController extends Controller
         $wish_id = $request->wish_id;
 
         if (!$wish_id) {
+
             // Add new wish
             $new_wish = new WishList();
-
-            $new_wish->wish_name = $request->wish_name;
-            $new_wish->user_id = $request->user()->id;
+            $new_wish->wish_name   = $request->wish_name;
+            $new_wish->user_id     = $request->user()->id;
             $new_wish->description = $request->description;
-            $new_wish->price = $request->price;
-            $new_wish->link = $request->link;
+            $new_wish->price       = $request->price;
+            $new_wish->link        = $request->link;
             $new_wish->save();
         }
         else {
+
             // Edit existing wish
             WishList::where('id', $wish_id)->update([
-                'wish_name' => $request->wish_name,
+                'wish_name'   => $request->wish_name,
                 'description' => $request->description,
-                'price' => $request->price,
-                'link' => $request->link,
+                'price'       => $request->price,
+                'link'        => $request->link,
             ]);
         }
 
@@ -54,7 +55,7 @@ class WishListController extends Controller
         $delete_wish_id = $request->delete_wish_id;
 
         if (!$delete_wish_id)
-            return response()->json(['message' => 'error message'], 500);
+            return response()->json(['message' => 'Something went wrong.'], 500);
 
         WishList::where('id', $delete_wish_id)->delete();
 
@@ -64,7 +65,7 @@ class WishListController extends Controller
     public function getUsersWishList(Request $request)
     {
         $user_id = $request->input('userId');
-        $wishes = WishList::where('user_id', $user_id)->get();
+        $wishes  = WishList::where('user_id', $user_id)->get();
 
         return response()->json($wishes);
     }

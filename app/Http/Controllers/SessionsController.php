@@ -3,8 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\User;
-use Doctrine\DBAL\Exception;
-use Illuminate\Http\Request;
 
 class SessionsController extends Controller
 {
@@ -21,7 +19,7 @@ class SessionsController extends Controller
     {
         $user = User::where('username', \request(['username']))->first();
         if (!$user)
-            return 404;
+            return response()->json(['message' => 'User is not found.'], 404);
 
         auth()->login($user);
 
